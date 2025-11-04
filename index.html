@@ -1,180 +1,175 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rockin Studio · AI Audio Creation & Mastering</title>
+  <title>Rockin Studio · Estación de trabajo de audio con IA</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/styles.css">
 </head>
 <body>
-  <header>
-    <div class="container">
-      <nav>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
         <span class="logo">Rockin Studio</span>
-        <ul>
-          <li><a href="#features">Features</a></li>
-          <li><a href="#workflow">Workflow</a></li>
-          <li><a href="#pricing">Pricing</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-        <a class="cta" href="#workspace">Launch App</a>
-      </nav>
+        <span class="beta">IA Suite</span>
+      </div>
+      <button class="sidebar-action" id="new-project">Nuevo proyecto</button>
+
+      <section class="sidebar-section">
+        <header>
+          <h2>Biblioteca</h2>
+          <button class="icon-button" id="refresh-library" title="Actualizar biblioteca">⟳</button>
+        </header>
+        <ul class="library-list" id="library-list"></ul>
+      </section>
+
+      <section class="sidebar-section">
+        <header>
+          <h2>Macros de IA</h2>
+        </header>
+        <div class="macro-grid">
+          <button class="macro" data-macro="enhance">Pulir mezcla</button>
+          <button class="macro" data-macro="widen">Abrir estéreo</button>
+          <button class="macro" data-macro="lyrics">Generar letras</button>
+          <button class="macro" data-macro="master">Master instantáneo</button>
+        </div>
+      </section>
+
+      <section class="sidebar-section session-notes">
+        <header>
+          <h2>Notas</h2>
+        </header>
+        <textarea id="session-notes" placeholder="Ideas, referencias, tareas pendientes..."></textarea>
+      </section>
+    </aside>
+
+    <main class="main-area">
+      <header class="top-bar">
+        <div>
+          <h1>Horizonte IA</h1>
+          <div class="project-meta">
+            <span>120 BPM</span>
+            <span>D menor</span>
+            <span>Compás 4/4</span>
+            <span>Motor Neuronal v3.2</span>
+          </div>
+        </div>
+        <div class="top-actions">
+          <button class="ghost" id="toggle-grid">Ver cuadrícula</button>
+          <button class="ghost" id="render-preview">Renderizar preview</button>
+          <button class="primary" id="publish-project">Publicar</button>
+        </div>
+      </header>
+
+      <section class="main-surface">
+        <section class="arrangement">
+          <div class="timeline-header">
+            <div class="ruler" id="timeline-ruler"></div>
+            <div class="time-display" id="playhead-time">Barra 1 • Tiempo 00:00</div>
+          </div>
+          <div class="tracks" id="tracks"></div>
+        </section>
+
+        <section class="dock">
+          <section class="module" id="generator-module">
+            <header>
+              <h2>Generador inteligente</h2>
+              <span class="status" id="generator-status">Listo</span>
+            </header>
+            <form id="generator-form">
+              <label for="generator-type">Tipo de pista</label>
+              <select id="generator-type" required>
+                <option value="sintetizador">Sintetizador</option>
+                <option value="batería">Batería</option>
+                <option value="bajo">Bajo</option>
+                <option value="voz">Voz</option>
+                <option value="pads">Pads ambientales</option>
+              </select>
+
+              <label for="generator-mood">Describe el mood</label>
+              <input id="generator-mood" type="text" placeholder="Ej. dream pop nocturno, texturas cálidas" required>
+
+              <label for="generator-length">Duración (compases)</label>
+              <input id="generator-length" type="number" min="4" max="64" step="4" value="16">
+
+              <button type="submit" class="primary full">Generar pista con IA</button>
+            </form>
+            <p class="module-hint">La IA ajustará armonía, dinámica y textura para complementar tu mezcla actual.</p>
+          </section>
+
+          <section class="module" id="versions-module">
+            <header>
+              <h2>Versiones</h2>
+              <button class="icon-button" id="new-version" title="Guardar versión">＋</button>
+            </header>
+            <ul class="version-list" id="version-list"></ul>
+          </section>
+        </section>
+      </section>
+
+      <footer class="transport">
+        <div class="transport-left">
+          <button class="icon-button" id="rewind" title="Rebobinar">⏮</button>
+          <button class="icon-button" id="play" title="Reproducir">▶</button>
+          <button class="icon-button" id="record" title="Grabar">⏺</button>
+          <span class="clock" id="transport-display">00:00:00</span>
+        </div>
+        <div class="transport-middle">
+          <label>Tempo
+            <input type="range" id="tempo" min="80" max="180" value="120">
+            <span id="tempo-value">120</span>
+          </label>
+          <label>Humanización
+            <input type="range" id="humanize" min="0" max="100" value="35">
+            <span id="humanize-value">35%</span>
+          </label>
+        </div>
+        <div class="transport-right">
+          <button class="ghost" id="export-stems">Exportar stems</button>
+          <div class="meter" id="master-meter">
+            <div class="meter-level"></div>
+          </div>
+        </div>
+      </footer>
+    </main>
+
+    <aside class="inspector">
+      <section class="inspector-section" id="track-inspector">
+        <header>
+          <h2>Inspector de pista</h2>
+        </header>
+        <div class="inspector-body" id="inspector-body">
+          <p>Selecciona una pista para ver parámetros.</p>
+        </div>
+      </section>
+
+      <section class="inspector-section ai-console">
+        <header>
+          <h2>Asistente IA</h2>
+        </header>
+        <div class="console-log" id="ai-log"></div>
+        <form id="ai-form" class="console-input">
+          <input type="text" id="ai-prompt" placeholder="Pide ajustes, genera letras, consulta arreglos..." required>
+          <button type="submit" class="primary">Enviar</button>
+        </form>
+      </section>
+    </aside>
+  </div>
+
+  <template id="track-template">
+    <div class="track-row">
+      <div class="track-info">
+        <button class="track-arm" title="Armar para grabación">●</button>
+        <div class="track-name"></div>
+        <span class="track-tags"></span>
+      </div>
+      <div class="clip-lane"></div>
     </div>
-  </header>
-
-  <main>
-    <section class="hero container" id="workspace">
-      <div>
-        <h1>Enhance, create, edit, and master your music with AI.</h1>
-        <p>Rockin Studio combines studio-grade processing with generative intelligence so you can go from idea to release-ready masters in minutes—no engineer required.</p>
-        <div class="hero-actions">
-          <button class="button-primary" data-action="enhance">Start Enhancing</button>
-          <button class="button-secondary" data-action="create">Generate New Track</button>
-        </div>
-      </div>
-      <div class="showcase">
-        <label for="audio-upload">Upload stems or full mixes</label>
-        <input type="file" id="audio-upload" accept="audio/*" multiple>
-        <div id="track-list" class="track-list"></div>
-        <div class="workspace-status">
-          <strong>Status:</strong> <span id="workspace-status">Waiting for your first track.</span>
-        </div>
-        <div class="workspace-actions">
-          <button class="button-primary" data-action="edit">Smart Edit</button>
-          <button class="button-secondary" data-action="master">Instant Master</button>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="features">
-      <div class="container">
-        <header>
-          <h2>Every part of your audio workflow, amplified.</h2>
-          <p class="section-intro">From inspiration to final master, Rockin Studio keeps you in the creative zone.</p>
-        </header>
-        <div class="features-grid">
-          <article class="feature-card">
-            <h3>Enhance</h3>
-            <p>AI-driven noise removal, vocal clarity, and dynamic balance tuned to your genre and mood.</p>
-          </article>
-          <article class="feature-card">
-            <h3>Create</h3>
-            <p>Describe your vibe and generate melodies, chord progressions, and rhythms that match your vision.</p>
-          </article>
-          <article class="feature-card">
-            <h3>Edit</h3>
-            <p>Isolate stems, time-stretch without artifacts, and apply smart arrangements with a single click.</p>
-          </article>
-          <article class="feature-card">
-            <h3>Master</h3>
-            <p>Deliver competitive loudness, spectral balance, and release-ready polish trusted by professionals.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="workflow">
-      <div class="container">
-        <header>
-          <h2>Your creative flow, reimagined.</h2>
-          <p class="section-intro">A guided experience helps you collaborate with AI at every step.</p>
-        </header>
-        <div class="workflow-grid">
-          <article class="workflow-step">
-            <span>01</span>
-            <h3>Upload or ideate</h3>
-            <p>Drop in raw takes or start from scratch with AI prompts tailored to your genre.</p>
-          </article>
-          <article class="workflow-step">
-            <span>02</span>
-            <h3>Shape the sound</h3>
-            <p>Use smart sliders for tone, mood, intensity, and width while previewing instant changes.</p>
-          </article>
-          <article class="workflow-step">
-            <span>03</span>
-            <h3>Collaborate in real-time</h3>
-            <p>Share links, invite feedback, and keep your version history synced across devices.</p>
-          </article>
-          <article class="workflow-step">
-            <span>04</span>
-            <h3>Release-ready masters</h3>
-            <p>Export to streaming, vinyl, or Dolby Atmos specs with automatic metadata tagging.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="pricing">
-      <div class="container">
-        <header>
-          <h2>Pricing tuned to your tempo.</h2>
-          <p class="section-intro">Flexible plans for indie artists, producers, and studios.</p>
-        </header>
-        <div class="pricing-grid">
-          <article class="pricing-card">
-            <h3>Starter</h3>
-            <p class="price">$19<span>/mo</span></p>
-            <ul class="feature-list">
-              <li>10 mastered tracks monthly</li>
-              <li>AI enhancements & stem separation</li>
-              <li>Standard export formats</li>
-            </ul>
-            <button class="button-secondary">Try Starter</button>
-          </article>
-          <article class="pricing-card highlight">
-            <h3>Creator</h3>
-            <p class="price">$49<span>/mo</span></p>
-            <ul class="feature-list">
-              <li>Unlimited mastering & enhancements</li>
-              <li>Full generative suite</li>
-              <li>Collaboration & versioning tools</li>
-            </ul>
-            <button class="button-primary">Choose Creator</button>
-          </article>
-          <article class="pricing-card">
-            <h3>Studio</h3>
-            <p class="price">$129<span>/mo</span></p>
-            <ul class="feature-list">
-              <li>Surround & spatial audio mastering</li>
-              <li>Priority AI compute</li>
-              <li>Dedicated success engineer</li>
-            </ul>
-            <button class="button-secondary">Talk to Sales</button>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="testimonials">
-      <div class="container">
-        <div class="testimonial">
-          <p>“Rockin Studio turned my demo into a release-ready track in a single session. The AI mastering sounds like a top-tier engineer.”</p>
-          <div class="author">Nova Lune · Electronic Artist</div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="container">
-        <div class="cta-banner" id="contact">
-          <h2>Ready to rock your next release?</h2>
-          <p>Book a live walkthrough with our team and see how AI can elevate your sound.</p>
-          <a class="button-primary" href="mailto:hello@rockinstudio.ai">Book a session</a>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="container">© <span id="year"></span> Rockin Studio. Crafted for creators everywhere.</div>
-  </footer>
+  </template>
 
   <script type="module" src="assets/app.js"></script>
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
 </body>
 </html>
