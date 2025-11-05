@@ -324,7 +324,7 @@ button {
 
 .track-row {
   display: grid;
-  grid-template-columns: 220px minmax(0, 1fr);
+  grid-template-columns: 220px 180px minmax(0, 1fr);
   gap: 1rem;
   background: rgba(18, 24, 44, 0.55);
   border: 1px solid rgba(255, 255, 255, 0.05);
@@ -356,6 +356,32 @@ button {
   color: var(--muted);
 }
 
+.track-visualizer {
+  background: rgba(10, 15, 32, 0.78);
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  align-items: center;
+  min-height: 130px;
+}
+
+.waveform {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  padding: 0.75rem 0.6rem;
+  width: 100%;
+  height: 100%;
+}
+
+.waveform-bar {
+  flex: 1;
+  min-width: 3px;
+  border-radius: 4px 4px 0 0;
+  background: linear-gradient(180deg, rgba(109, 141, 255, 0.85), rgba(40, 55, 110, 0.3));
+  opacity: 0.85;
+  transition: height 0.2s ease;
+}
+
 .track-arm {
   align-self: flex-start;
   border: 1px solid rgba(255, 255, 255, 0.12);
@@ -375,7 +401,7 @@ button {
 
 .clip-lane {
   position: relative;
-  min-height: 120px;
+  min-height: 130px;
   background-image: linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
   background-size: var(--measure-width) 100%;
 }
@@ -450,6 +476,181 @@ button {
 
 .module h2 {
   font-size: 1rem;
+}
+
+.stem-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0.6rem;
+}
+
+.stem-card {
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(8, 12, 24, 0.7);
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  transition: border 0.2s ease, transform 0.2s ease;
+  cursor: pointer;
+}
+
+.stem-card:hover {
+  border-color: rgba(109, 141, 255, 0.45);
+  transform: translateY(-1px);
+}
+
+.stem-card.active {
+  border-color: rgba(45, 212, 191, 0.6);
+  box-shadow: 0 12px 30px -18px rgba(45, 212, 191, 0.8);
+}
+
+.stem-card strong {
+  font-size: 0.9rem;
+}
+
+.stem-card span {
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.stem-status {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+}
+
+.stem-status.ready {
+  color: var(--accent);
+}
+
+.master-fader {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  justify-content: space-between;
+}
+
+.master-fader label {
+  flex: 1;
+  gap: 0.4rem;
+}
+
+.value-badge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--accent);
+  background: rgba(45, 212, 191, 0.12);
+  padding: 0.25rem 0.55rem;
+  border-radius: 999px;
+  align-self: flex-start;
+}
+
+.stem-mixers {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.stem-mixer {
+  border-radius: 12px;
+  background: rgba(6, 10, 22, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 0.7rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  gap: 0.6rem;
+}
+
+.stem-label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.stem-label strong {
+  font-size: 0.85rem;
+}
+
+.stem-controls {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.stem-controls label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.stem-controls input[type="range"] {
+  width: 100%;
+}
+
+.stem-value {
+  font-size: 0.75rem;
+  color: var(--text);
+  justify-self: end;
+}
+
+.toggle-row {
+  display: flex;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.toggle input {
+  accent-color: var(--primary);
+}
+
+.noise-actions {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.idea-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  max-height: 180px;
+  overflow-y: auto;
+}
+
+.idea-card {
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 0.7rem;
+  background: rgba(8, 12, 26, 0.7);
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.idea-card strong {
+  font-size: 0.85rem;
+}
+
+.idea-card span {
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.idea-card p {
+  font-size: 0.8rem;
 }
 
 .status {
@@ -683,7 +884,7 @@ textarea:focus {
   }
 
   .track-row {
-    grid-template-columns: 200px minmax(0, 1fr);
+    grid-template-columns: 200px 150px minmax(0, 1fr);
   }
 }
 
@@ -693,6 +894,14 @@ textarea:focus {
   }
 
   .inspector {
+    display: none;
+  }
+
+  .track-row {
+    grid-template-columns: 200px minmax(0, 1fr);
+  }
+
+  .track-visualizer {
     display: none;
   }
 }

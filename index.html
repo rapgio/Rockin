@@ -100,12 +100,118 @@
             <p class="module-hint">La IA ajustará armonía, dinámica y textura para complementar tu mezcla actual.</p>
           </section>
 
+          <section class="module" id="stems-module">
+            <header>
+              <h2>Laboratorio de stems</h2>
+              <button class="ghost" id="separate-stems">Separar stems</button>
+            </header>
+            <p class="module-hint">Divide la mezcla en percusión, bajo, armonías, voces y efectos para editar con precisión.</p>
+            <div class="stem-grid" id="stem-list"></div>
+          </section>
+
+          <section class="module" id="mix-module">
+            <header>
+              <h2>Mezclador neural</h2>
+              <span class="status">Escucha activa</span>
+            </header>
+            <div class="master-fader">
+              <label>Mezcla completa
+                <input type="range" id="master-mix" min="-12" max="6" value="0">
+              </label>
+              <span class="value-badge" id="master-mix-value">0 dB</span>
+            </div>
+            <div class="stem-mixers" id="stem-mixers"></div>
+          </section>
+
           <section class="module" id="versions-module">
             <header>
               <h2>Versiones</h2>
               <button class="icon-button" id="new-version" title="Guardar versión">＋</button>
             </header>
             <ul class="version-list" id="version-list"></ul>
+          </section>
+
+          <section class="module" id="vocal-module">
+            <header>
+              <h2>Corrección vocal</h2>
+              <span class="status">Armonía guiada</span>
+            </header>
+            <form id="vocal-form">
+              <label for="pitch-strength">Afinación inteligente
+                <input type="range" id="pitch-strength" min="0" max="100" value="65">
+                <span class="value-badge" id="pitch-strength-value">65%</span>
+              </label>
+              <label for="formant-shift">Formantes
+                <input type="range" id="formant-shift" min="-12" max="12" value="0">
+                <span class="value-badge" id="formant-shift-value">0 st</span>
+              </label>
+              <label for="vibrato-depth">Control de vibrato
+                <input type="range" id="vibrato-depth" min="0" max="100" value="20">
+                <span class="value-badge" id="vibrato-depth-value">20%</span>
+              </label>
+              <label for="de-ess">De-esser dinámico
+                <input type="range" id="de-ess" min="0" max="100" value="40">
+                <span class="value-badge" id="de-ess-value">40%</span>
+              </label>
+              <div class="toggle-row">
+                <label class="toggle">
+                  <input type="checkbox" id="double-mode" checked>
+                  <span>Doblado armónico</span>
+                </label>
+                <label class="toggle">
+                  <input type="checkbox" id="tune-backgrounds">
+                  <span>Sincronizar coros</span>
+                </label>
+              </div>
+              <button type="submit" class="primary full" id="apply-vocal">Aplicar corrección</button>
+            </form>
+          </section>
+
+          <section class="module" id="noise-module">
+            <header>
+              <h2>Reducción de ruido</h2>
+              <span class="status" id="noise-status">Perfil “Estudio”</span>
+            </header>
+            <label for="noise-profile">Perfil de referencia
+              <select id="noise-profile">
+                <option value="estudio">Estudio silencioso</option>
+                <option value="directo">Show en vivo</option>
+                <option value="vinilo">Vinilo vintage</option>
+                <option value="field">Field recording</option>
+              </select>
+            </label>
+            <label for="noise-amount">Intensidad
+              <input type="range" id="noise-amount" min="0" max="100" value="35">
+            </label>
+            <span class="value-badge" id="noise-amount-value">35%</span>
+            <div class="noise-actions">
+              <button class="ghost" id="learn-noise">Aprender ruido</button>
+              <button class="primary" id="apply-noise">Aplicar limpieza</button>
+            </div>
+            <p class="module-hint">Analiza el perfil de ruido y aplica supresión multibanda sin afectar la musicalidad.</p>
+          </section>
+
+          <section class="module" id="ideas-module">
+            <header>
+              <h2>Generador de ideas</h2>
+              <span class="status">Inspirado por IA</span>
+            </header>
+            <form id="ideas-form">
+              <label for="idea-reference">Referencia de ejemplo
+                <select id="idea-reference">
+                  <option value="ninguna">Sin referencia</option>
+                  <option value="Horizonte IA">Proyecto actual</option>
+                  <option value="Dreamwave">Dreamwave demo</option>
+                  <option value="Soultronic">Soultronic session</option>
+                  <option value="LoFi Nebula">LoFi Nebula</option>
+                </select>
+              </label>
+              <label for="idea-goal">¿Qué deseas crear?
+                <textarea id="idea-goal" rows="3" placeholder="Ej. Crear un puente con voz etérea inspirado en la referencia."></textarea>
+              </label>
+              <button type="submit" class="primary full">Generar ideas con IA</button>
+            </form>
+            <div class="idea-list" id="idea-suggestions"></div>
           </section>
         </section>
       </section>
@@ -165,6 +271,9 @@
         <button class="track-arm" title="Armar para grabación">●</button>
         <div class="track-name"></div>
         <span class="track-tags"></span>
+      </div>
+      <div class="track-visualizer">
+        <div class="waveform"></div>
       </div>
       <div class="clip-lane"></div>
     </div>
